@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Paragraf Soru Çözme Takvimi</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --border-color: #dfe6e9;
+            --locked-color: #e0e0e0;
+            --future-color: #f5f5f5;
+            --text-color: #333;
+            --bg-color: #f5f7fa;
+            --card-bg: white;
+            --today-color: #9c27b0;
+            --warning-color: #ff9800;
+        }
+
+        .dark-mode {
+            --primary-color: #5c6bc0;
+            --success-color: #4caf50;
+            --danger-color: #f44336;
+            --light-color: #424242;
+            --dark-color: #f5f5f5;
+            --border-color: #555;
+            --locked-color: #333;
+            --future-color: #2d2d2d;
+            --text-color: #f5f5f5;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --today-color: #ba68c8;
+            --warning-color: #ffa726;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            overflow: hidden;
+            position: relative;
+            padding-bottom: 80px;
+        }
+        
+      header {
+    text-align: center;
+    margin: 40px 0 30px; /* Üst boşluğu artırdık */
+    position: relative;
+    padding-top: 50px; /* Butonlar için alan açtık */
+}
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        
+        .header-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 2; /* Diğer elementlerin üstünde kalmasını sağlar */
+}
+
+.header-link {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    z-index: 2;
+}
+        
+        .header-link:hover {
+            transform: scale(1.1);
+        }
+        
+        .settings-btn, .dark-mode-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .settings-btn:hover, .dark-mode-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .reset-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        .reset-btn:hover {
+            transform: scale(1.1);
+            background: #c0392b;
+        }
+        
+        .settings-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .settings-panel h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .settings-group {
+            margin-bottom: 20px;
+        }
+        
+        .settings-group h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .weeks-selector {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .weeks-selector button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .weeks-selector span {
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .save-settings-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .save-settings-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .calendar-container {
+            margin-top: 20px;
+        }
+        
+        .weeks-container {
+            margin-bottom: 30px;
+        }
+        
+        .week-title {
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .week-title::before {
+            content: "";
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+        }
+        
+        .day-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .day-card.locked {
+            background-color: var(--locked-color);
+            color: #999;
+        }
+        
+        .day-card.future {
+            background-color: var(--future-color);
+        }
+        
+        .day-card.today {
+            border: 2px solid var(--today-color);
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .day-number {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .day-name {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .locked .day-number,
+        .locked .day-name {
+            color: #999;
+        }
+        
+        .future .day-number,
+        .future .day-name {
+            color: #bbb;
+        }
+        
+        .today .day-number,
+        .today .day-name {
+            color: var(--today-color);
+        }
+        
+        .time-input-container {
+            margin: 25px 0 15px;
+            position: relative;
+        }
+        
+        .time-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            transition: border-color 0.3s;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .locked .time-input {
+            background-color: var(--locked-color);
+            cursor: not-allowed;
+        }
+        
+        .future .time-input {
+            background-color: var(--future-color);
+            cursor: not-allowed;
+        }
+        
+        .today .time-input {
+            border-color: var(--today-color);
+        }
+        
+        .time-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .time-input::placeholder {
+            color: var(--text-color);
+            opacity: 0.5;
+        }
+        
+        .tick-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .tick-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--light-color);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .locked .tick-btn {
+            cursor: not-allowed;
+            background-color: var(--locked-color);
+        }
+        
+        .future .tick-btn {
+            cursor: not-allowed;
+            background-color: var(--future-color);
+        }
+        
+        .today .tick-btn {
+            background-color: var(--today-color);
+        }
+        
+        .tick-btn.completed {
+            background-color: var(--success-color);
+            transform: scale(1.1);
+        }
+        
+        .tick-btn.completed:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+        }
+        
+        .tick-btn:not(.completed):hover {
+            background-color: var(--border-color);
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            gap: 5px;
+        }
+        
+        .stat-box {
+            width: 100%;
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .correct {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+        
+        .incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+            border: 1px solid var(--danger-color);
+        }
+        
+        .locked .stat-box {
+            background-color: var(--locked-color);
+            border-color: var(--border-color);
+            color: #999;
+        }
+        
+        .future .stat-box {
+            background-color: var(--future-color);
+            border-color: var(--border-color);
+            color: #bbb;
+        }
+        
+        .today .stat-box {
+            border-color: var(--today-color);
+        }
+        
+        .stat-input {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            -moz-appearance: textfield;
+        }
+        
+        .stat-input::-webkit-outer-spin-button,
+        .stat-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        .correct .stat-input {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: var(--success-color);
+        }
+        
+        .incorrect .stat-input {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: var(--danger-color);
+        }
+        
+        .lock-btn {
+            position: absolute;
+            top: 5px;
+            left: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 2;
+            color: var(--text-color);
+        }
+        
+        .locked .lock-btn {
+            color: #999;
+        }
+        
+        .locked .lock-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .future .lock-btn {
+            color: #bbb;
+            cursor: not-allowed;
+        }
+        
+        .today .lock-btn {
+            display: none;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .reset-confirm-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .reset-confirm-panel h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .reset-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .reset-confirm-btn, .reset-cancel-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-confirm-btn {
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        .reset-confirm-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        
+        .reset-cancel-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .reset-cancel-btn:hover {
+            background: #3a56e8;
+            transform: translateY(-2px);
+        }
+        
+        .warning-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 2px solid var(--warning-color);
+        }
+        
+        .warning-panel h2 {
+            margin-top: 0;
+            color: var(--warning-color);
+            margin-bottom: 15px;
+        }
+        
+        .warning-panel p {
+            margin-bottom: 20px;
+        }
+        
+        .warning-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .warning-confirm-btn, .warning-cancel-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .warning-confirm-btn {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .warning-confirm-btn:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+        
+        .warning-cancel-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .warning-cancel-btn:hover {
+            background: #3a56e8;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .container {
+                padding: 15px;
+                padding-bottom: 80px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .header-controls {
+                top: 5px;
+                right: 5px;
+            }
+            
+            .header-link {
+                top: 5px;
+                left: 5px;
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .settings-btn, .dark-mode-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .reset-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .stat-box {
+                padding: 6px;
+                font-size: 0.8rem;
+            }
+            
+            .stat-input {
+                padding: 5px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="https://www.siteniz.com" class="header-link" id="siteLink" target="_blank">🏠︎</a>
+			<p>
+            <h1>Paragraf Soru Çözme Takvimi</h1>
+            <p class="subtitle">Haftalık paragraf çözme takipçiniz</p>
+            <div class="header-controls">
+                <button class="dark-mode-btn" id="darkModeBtn" title="Koyu/Açık mod">🌙</button>
+                <button class="settings-btn" id="settingsBtn" title="Ayarlar">⚙️</button>
+            </div>
+        </header>
+        
+        <div class="calendar-container">
+            <div class="weeks-container" id="weeksContainer">
+                <!-- Weeks will be generated by JavaScript -->
+            </div>
+        </div>
+        
+        <button class="reset-btn" id="resetBtn" title="Tüm verileri sıfırla">⟳</button>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="settings-panel" id="settingsPanel">
+        <h2>Takvim Ayarları</h2>
+        
+        <div class="settings-group">
+            <h3>Hafta Sayısı</h3>
+            <div class="weeks-selector">
+                <button id="decreaseWeeks">-</button>
+                <span id="weeksCount">4</span> Hafta
+                <button id="increaseWeeks">+</button>
+            </div>
+        </div>
+        
+        <button class="save-settings-btn" id="saveSettings">AYARLARI KAYDET</button>
+    </div>
+    
+    <div class="reset-confirm-panel" id="resetConfirmPanel">
+        <h2>Tüm verileri sıfırlamak istediğinize emin misiniz?</h2>
+        <p>Bu işlem geri alınamaz! Tüm kayıtlı veriler silinecek.</p>
+        <div class="reset-buttons">
+            <button class="reset-confirm-btn" id="resetConfirmBtn">EVET, SIFIRLA</button>
+            <button class="reset-cancel-btn" id="resetCancelBtn">VAZGEÇ</button>
+        </div>
+    </div>
+    
+    <div class="warning-panel" id="warningPanel">
+        <h2>UYARI!</h2>
+        <p>Ayarları kaydederseniz takviminiz sıfırlanacaktır. Devam etmek istiyor musunuz?</p>
+        <div class="warning-buttons">
+            <button class="warning-confirm-btn" id="warningConfirmBtn">KAYDET</button>
+            <button class="warning-cancel-btn" id="warningCancelBtn">VAZGEÇ</button>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Veriler başarıyla kaydedildi!
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const weeksContainer = document.getElementById('weeksContainer');
+            const settingsBtn = document.getElementById('settingsBtn');
+            const darkModeBtn = document.getElementById('darkModeBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const siteLink = document.getElementById('siteLink');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const resetConfirmPanel = document.getElementById('resetConfirmPanel');
+            const resetConfirmBtn = document.getElementById('resetConfirmBtn');
+            const resetCancelBtn = document.getElementById('resetCancelBtn');
+            const warningPanel = document.getElementById('warningPanel');
+            const warningConfirmBtn = document.getElementById('warningConfirmBtn');
+            const warningCancelBtn = document.getElementById('warningCancelBtn');
+            const overlay = document.getElementById('overlay');
+            const saveSettings = document.getElementById('saveSettings');
+            const decreaseWeeks = document.getElementById('decreaseWeeks');
+            const increaseWeeks = document.getElementById('increaseWeeks');
+            const weeksCount = document.getElementById('weeksCount');
+            
+            // Constants
+            const daysOfWeek = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            const daysOfWeekShort = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+            
+            // Variables
+            let startDayIndex = 0; // Always Monday
+            let totalWeeks = 4;
+            let isDarkMode = false;
+            let today = new Date();
+            let todayIndex = (today.getDay() + 6) % 7; // Adjust so Monday is 0
+            
+            // Load settings from localStorage
+            function loadSettings() {
+                const savedSettings = localStorage.getItem('paragrafTakvimSettings');
+                if (savedSettings) {
+                    const settings = JSON.parse(savedSettings);
+                    
+                    // Dark mode
+                    if (settings.darkMode) {
+                        toggleDarkMode();
+                    }
+                    
+                    // Weeks count
+                    if (settings.totalWeeks) {
+                        totalWeeks = settings.totalWeeks;
+                        weeksCount.textContent = totalWeeks;
+                    }
+                }
+            }
+            
+            // Save settings to localStorage
+            function saveSettingsToLocalStorage() {
+                const settings = {
+                    totalWeeks: totalWeeks,
+                    darkMode: isDarkMode
+                };
+                localStorage.setItem('paragrafTakvimSettings', JSON.stringify(settings));
+            }
+            
+            // Generate calendar based on settings
+            function generateCalendar() {
+                weeksContainer.innerHTML = '';
+                
+                // Create weeks
+                for (let week = 0; week < totalWeeks; week++) {
+                    const weekContainer = document.createElement('div');
+                    weekContainer.className = 'week-container';
+                    
+                    // Week title
+                    const weekTitle = document.createElement('h3');
+                    weekTitle.className = 'week-title';
+                    weekTitle.textContent = `${week + 1}. Hafta`;
+                    weekContainer.appendChild(weekTitle);
+                    
+                    // Calendar grid
+                    const calendarGrid = document.createElement('div');
+                    calendarGrid.className = 'calendar-grid';
+                    
+                    // Create day cards for the week (always starts with Monday)
+                    for (let i = 0; i < 7; i++) {
+                        const dayName = daysOfWeekShort[i];
+                        const dayCard = document.createElement('div');
+                        dayCard.className = 'day-card';
+                        
+                        // Calculate day offset from today
+                        const dayOffset = (week * 7) + i - todayIndex;
+                        
+                        // Determine if day is past, today or future
+                        const isToday = dayOffset === 0;
+                        const isPast = dayOffset < 0;
+                        const isFuture = dayOffset > 0;
+                        
+                        if (isToday) {
+                            dayCard.classList.add('today');
+                        } else if (isPast) {
+                            dayCard.classList.add('locked');
+                        } else if (isFuture) {
+                            dayCard.classList.add('future');
+                        }
+                        
+                        dayCard.innerHTML = `
+                            ${isPast ? '<button class="lock-btn" title="Kilidi aç/kapat">🔓</button>' : 
+                              isFuture ? '<button class="lock-btn" title="Gelecek gün" disabled>🔒</button>' : ''}
+                            <div class="day-name">${dayName}</div>
+                            <div class="day-number">${week * 7 + i + 1}</div>
+                            <div class="time-input-container">
+                                <input type="text" class="time-input" id="time-${week}-${i}" placeholder="00:00" maxlength="5" ${isPast || isFuture ? 'readonly' : ''}>
+                            </div>
+                            <div class="tick-container">
+                                <button class="tick-btn" id="tick-${week}-${i}" ${isPast || isFuture ? 'disabled' : ''}>✓</button>
+                            </div>
+                            <div class="stats-container">
+                                <div class="stat-box correct">
+                                    Doğru
+                                    <input type="number" class="stat-input" id="correct-${week}-${i}" min="0" max="200" placeholder="0" ${isPast || isFuture ? 'readonly' : ''}>
+                                </div>
+                                <div class="stat-box incorrect">
+                                    Yanlış
+                                    <input type="number" class="stat-input" id="incorrect-${week}-${i}" min="0" max="200" placeholder="0" ${isPast || isFuture ? 'readonly' : ''}>
+                                </div>
+                            </div>
+                        `;
+                        
+                        calendarGrid.appendChild(dayCard);
+                        
+                        // Time input formatting and validation (mm:ss, max 60:59)
+                        const timeInput = dayCard.querySelector(`#time-${week}-${i}`);
+                        if (timeInput) {
+                            timeInput.addEventListener('input', function(e) {
+                                let value = e.target.value.replace(/\D/g, '');
+                                if (value.length > 2) {
+                                    value = value.substring(0, 2) + ':' + value.substring(2, 4);
+                                }
+                                e.target.value = value;
+                                
+                                // Validate time (max 60:59)
+                                if (value.includes(':')) {
+                                    const [minutes, seconds] = value.split(':');
+                                    if (parseInt(minutes) > 60) {
+                                        e.target.value = '60:' + (seconds || '00');
+                                    }
+                                    if (seconds && parseInt(seconds) > 59) {
+                                        e.target.value = (minutes || '00') + ':59';
+                                    }
+                                }
+                                
+                                saveToLocalStorage();
+                            });
+                        }
+                        
+                        // Tick button click event with sound
+                        const tickBtn = dayCard.querySelector(`#tick-${week}-${i}`);
+                        if (tickBtn) {
+                            tickBtn.addEventListener('click', function() {
+                                this.classList.toggle('completed');
+                                playTickSound();
+                                saveToLocalStorage();
+                                checkAllCompleted();
+                            });
+                        }
+                        
+                        // Stat inputs events (max 200 questions)
+                        const correctInput = dayCard.querySelector(`#correct-${week}-${i}`);
+                        const incorrectInput = dayCard.querySelector(`#incorrect-${week}-${i}`);
+                        
+                        if (correctInput && incorrectInput) {
+                            [correctInput, incorrectInput].forEach(input => {
+                                input.addEventListener('input', function() {
+                                    if (this.value < 0) this.value = 0;
+                                    if (this.value > 200) this.value = 200;
+                                    saveToLocalStorage();
+                                });
+                            });
+                        }
+                        
+                        // Lock/unlock button functionality for past days
+                        if (isPast) {
+                            const lockBtn = dayCard.querySelector('.lock-btn');
+                            if (lockBtn) {
+                                lockBtn.addEventListener('click', function() {
+                                    if (dayCard.classList.contains('locked')) {
+                                        // Unlock
+                                        dayCard.classList.remove('locked');
+                                        this.innerHTML = '🔒';
+                                        
+                                        // Enable all inputs
+                                        const inputs = dayCard.querySelectorAll('input');
+                                        inputs.forEach(input => input.readOnly = false);
+                                        
+                                        // Enable tick button
+                                        const tickBtn = dayCard.querySelector('.tick-btn');
+                                        if (tickBtn) tickBtn.disabled = false;
+                                    } else {
+                                        // Lock again
+                                        dayCard.classList.add('locked');
+                                        this.innerHTML = '🔓';
+                                        
+                                        // Disable all inputs
+                                        const inputs = dayCard.querySelectorAll('input');
+                                        inputs.forEach(input => input.readOnly = true);
+                                        
+                                        // Disable tick button
+                                        const tickBtn = dayCard.querySelector('.tick-btn');
+                                        if (tickBtn) tickBtn.disabled = true;
+                                    }
+                                    
+                                    saveToLocalStorage();
+                                });
+                            }
+                        }
+                    }
+                    
+                    weekContainer.appendChild(calendarGrid);
+                    weeksContainer.appendChild(weekContainer);
+                }
+                
+                // Load saved data
+                loadFromLocalStorage();
+            }
+            
+            // Load saved data
+            function loadFromLocalStorage() {
+                const savedData = localStorage.getItem('paragrafTakvimData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    
+                    for (let week = 0; week < totalWeeks; week++) {
+                        for (let i = 0; i < 7; i++) {
+                            const dayData = data[week] ? data[week][i] : null;
+                            if (dayData) {
+                                const timeInput = document.getElementById(`time-${week}-${i}`);
+                                const tickBtn = document.getElementById(`tick-${week}-${i}`);
+                                const correctInput = document.getElementById(`correct-${week}-${i}`);
+                                const incorrectInput = document.getElementById(`incorrect-${week}-${i}`);
+                                const dayCard = document.querySelector(`#weeksContainer > div:nth-child(${week+1}) .calendar-grid > div:nth-child(${i+1})`);
+                                
+                                if (timeInput) timeInput.value = dayData.time || '';
+                                if (tickBtn && dayData.completed) {
+                                    tickBtn.classList.add('completed');
+                                }
+                                if (correctInput) correctInput.value = dayData.correct || '';
+                                if (incorrectInput) incorrectInput.value = dayData.incorrect || '';
+                                
+                                // Restore lock state for past days
+                                if (dayCard && dayCard.classList.contains('locked') && dayData.locked === false) {
+                                    dayCard.classList.remove('locked');
+                                    const lockBtn = dayCard.querySelector('.lock-btn');
+                                    if (lockBtn) lockBtn.innerHTML = '🔒';
+                                    
+                                    const inputs = dayCard.querySelectorAll('input');
+                                    inputs.forEach(input => input.readOnly = false);
+                                    
+                                    const tickBtn = dayCard.querySelector('.tick-btn');
+                                    if (tickBtn) tickBtn.disabled = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Save data to localStorage
+            function saveToLocalStorage() {
+                const data = [];
+                
+                for (let week = 0; week < totalWeeks; week++) {
+                    const weekData = [];
+                    
+                    for (let i = 0; i < 7; i++) {
+                        const dayCard = document.querySelector(`#weeksContainer > div:nth-child(${week+1}) .calendar-grid > div:nth-child(${i+1})`);
+                        const timeInput = document.getElementById(`time-${week}-${i}`);
+                        const tickBtn = document.getElementById(`tick-${week}-${i}`);
+                        const correctInput = document.getElementById(`correct-${week}-${i}`);
+                        const incorrectInput = document.getElementById(`incorrect-${week}-${i}`);
+                        
+                        if (dayCard && timeInput && tickBtn && correctInput && incorrectInput) {
+                            weekData.push({
+                                time: timeInput.value,
+                                completed: tickBtn.classList.contains('completed'),
+                                correct: correctInput.value,
+                                incorrect: incorrectInput.value,
+                                locked: dayCard.classList.contains('locked')
+                            });
+                        }
+                    }
+                    
+                    data.push(weekData);
+                }
+                
+                localStorage.setItem('paragrafTakvimData', JSON.stringify(data));
+                
+                // Show auto-save notification briefly
+                const notification = document.getElementById('notification');
+                notification.textContent = "Otomatik kaydedildi";
+                notification.style.backgroundColor = '#3498db';
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 1000);
+            }
+            
+            // Reset all data
+            function resetAllData() {
+                localStorage.removeItem('paragrafTakvimData');
+                localStorage.removeItem('paragrafTakvimSettings');
+                
+                // Reset variables
+                totalWeeks = 4;
+                weeksCount.textContent = totalWeeks;
+                
+                // Regenerate calendar
+                generateCalendar();
+                
+                // Show notification
+                showNotification('Tüm veriler sıfırlandı!', 'success');
+            }
+            
+            // Save settings with warning
+            function saveSettingsWithWarning() {
+                warningPanel.style.display = 'block';
+                overlay.style.display = 'block';
+            }
+            
+            // Actually save settings after confirmation
+            function confirmSaveSettings() {
+                saveSettingsToLocalStorage();
+                generateCalendar();
+                settingsPanel.style.display = 'none';
+                warningPanel.style.display = 'none';
+                overlay.style.display = 'none';
+                showNotification('Ayarlar kaydedildi! Takvim sıfırlandı.', 'success');
+            }
+            
+            // Toggle dark mode
+            function toggleDarkMode() {
+                isDarkMode = !isDarkMode;
+                document.body.classList.toggle('dark-mode');
+                darkModeBtn.textContent = isDarkMode ? '☀️' : '🌙';
+            }
+            
+            // Play tick sound
+            function playTickSound() {
+                const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...');
+                audio.volume = 0.3;
+                audio.play().catch(e => console.log("Ses çalınamadı: ", e));
+            }
+            
+            // Check if all days are completed
+            function checkAllCompleted() {
+                const allCompleted = Array.from(document.querySelectorAll('.tick-btn')).every(btn => btn.classList.contains('completed'));
+                if (allCompleted) {
+                    createConfetti();
+                    showNotification('Tebrikler! Tüm günleri tamamladınız! 🎉', 'success');
+                }
+            }
+            
+            // Create confetti effect
+            function createConfetti() {
+                const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+                
+                for (let i = 0; i < 150; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = -10 + 'px';
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    const animationDuration = Math.random() * 3 + 2;
+                    
+                    confetti.animate([
+                        { top: '-10px', opacity: 1, transform: `rotate(0deg)` },
+                        { top: '100vh', opacity: 0, transform: `rotate(${Math.random() * 360}deg)` }
+                    ], {
+                        duration: animationDuration * 1000,
+                        easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
+                        fill: 'forwards'
+                    });
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, animationDuration * 1000);
+                }
+            }
+            
+            // Show notification
+            function showNotification(message, type) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.style.backgroundColor = type === 'success' ? '#2ecc71' : '#e74c3c';
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Event listeners
+            settingsBtn.addEventListener('click', function() {
+                settingsPanel.style.display = 'block';
+                overlay.style.display = 'block';
+            });
+            
+            darkModeBtn.addEventListener('click', function() {
+                toggleDarkMode();
+                saveSettingsToLocalStorage();
+            });
+            
+            resetBtn.addEventListener('click', function() {
+                resetConfirmPanel.style.display = 'block';
+                overlay.style.display = 'block';
+            });
+            
+            resetConfirmBtn.addEventListener('click', function() {
+                resetAllData();
+                resetConfirmPanel.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
+            resetCancelBtn.addEventListener('click', function() {
+                resetConfirmPanel.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
+            warningConfirmBtn.addEventListener('click', function() {
+                confirmSaveSettings();
+            });
+            
+            warningCancelBtn.addEventListener('click', function() {
+                warningPanel.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
+            overlay.addEventListener('click', function() {
+                settingsPanel.style.display = 'none';
+                resetConfirmPanel.style.display = 'none';
+                warningPanel.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
+            decreaseWeeks.addEventListener('click', function() {
+                if (totalWeeks > 1) {
+                    totalWeeks--;
+                    weeksCount.textContent = totalWeeks;
+                }
+            });
+            
+            increaseWeeks.addEventListener('click', function() {
+                if (totalWeeks < 8) {
+                    totalWeeks++;
+                    weeksCount.textContent = totalWeeks;
+                }
+            });
+            
+            saveSettings.addEventListener('click', function() {
+                saveSettingsWithWarning();
+            });
+            
+            // Initialize
+            loadSettings();
+            generateCalendar();
+        });
+    </script>
+</body>
+</html>
