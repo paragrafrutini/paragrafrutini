@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Paragraf Soru Çözme Takvimi</title>
+    <title>Paragraf Soru Çözme Takvimi</title>
     <style>
         :root {
             --primary-color: #4361ee;
@@ -64,12 +64,12 @@
             padding-bottom: 80px;
         }
         
-      header {
-    text-align: center;
-    margin: 40px 0 30px; /* Üst boşluğu artırdık */
-    position: relative;
-    padding-top: 50px; /* Butonlar için alan açtık */
-}
+        header {
+            text-align: center;
+            margin: 40px 0 30px;
+            position: relative;
+            padding-top: 50px;
+        }
         
         h1 {
             color: var(--primary-color);
@@ -85,33 +85,33 @@
         }
         
         .header-controls {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 10px;
-    z-index: 2; /* Diğer elementlerin üstünde kalmasını sağlar */
-}
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
 
-.header-link {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    z-index: 2;
-}
+        .header-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            z-index: 2;
+        }
         
         .header-link:hover {
             transform: scale(1.1);
@@ -137,27 +137,19 @@
         }
         
         .reset-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
             background: var(--danger-color);
             color: white;
             border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 1rem;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 10;
+            margin-top: 15px;
         }
         
         .reset-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
             background: #c0392b;
         }
         
@@ -185,33 +177,6 @@
         
         .settings-group {
             margin-bottom: 20px;
-        }
-        
-        .settings-group h3 {
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-        
-        .weeks-selector {
-            display: flex;
-            align-items: center;
-            margin-top: 15px;
-        }
-        
-        .weeks-selector button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-        
-        .weeks-selector span {
-            font-weight: bold;
-            min-width: 30px;
-            text-align: center;
         }
         
         .save-settings-btn {
@@ -583,6 +548,10 @@
             margin-bottom: 20px;
         }
         
+        .reset-confirm-panel p {
+            margin-bottom: 15px;
+        }
+        
         .reset-buttons {
             display: flex;
             justify-content: center;
@@ -620,67 +589,14 @@
             transform: translateY(-2px);
         }
         
-        .warning-panel {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
-            z-index: 1000;
-            display: none;
-            width: 90%;
-            max-width: 500px;
+        footer {
             text-align: center;
-            border: 2px solid var(--warning-color);
-        }
-        
-        .warning-panel h2 {
-            margin-top: 0;
-            color: var(--warning-color);
-            margin-bottom: 15px;
-        }
-        
-        .warning-panel p {
-            margin-bottom: 20px;
-        }
-        
-        .warning-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .warning-confirm-btn, .warning-cancel-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .warning-confirm-btn {
-            background: var(--warning-color);
-            color: white;
-        }
-        
-        .warning-confirm-btn:hover {
-            background: #f57c00;
-            transform: translateY(-2px);
-        }
-        
-        .warning-cancel-btn {
-            background: var(--primary-color);
-            color: white;
-        }
-        
-        .warning-cancel-btn:hover {
-            background: #3a56e8;
-            transform: translateY(-2px);
+            padding: 20px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 20px;
         }
         
         @media (max-width: 768px) {
@@ -717,11 +633,8 @@
             }
             
             .reset-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-                bottom: 20px;
-                right: 20px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
             }
             
             .stat-box {
@@ -740,23 +653,23 @@
     <div class="container">
         <header>
             <a href="https://ziyadeworks.github.io/ziyadeworks/" class="header-link" id="siteLink" target="_blank">🏠︎</a>
-			<p>
             <h1>Paragraf Soru Çözme Takvimi</h1>
             <p class="subtitle">Haftalık paragraf çözme takipçiniz</p>
             <div class="header-controls">
-                <button class="dark-mode-btn" id="darkModeBtn" title="Koyu/Açık mod">🌙</button>
                 <button class="settings-btn" id="settingsBtn" title="Ayarlar">⚙️</button>
             </div>
         </header>
         
         <div class="calendar-container">
             <div class="weeks-container" id="weeksContainer">
-                <!-- Weeks will be generated by JavaScript -->
+                <!-- JavaScript ile haftalar oluşturulacak -->
             </div>
         </div>
-        
-        <button class="reset-btn" id="resetBtn" title="Tüm verileri sıfırla">⟳</button>
     </div>
+    
+    <footer>
+        Yeni hafta başladığında geçmiş verilerinizi silmek için ayarlar bölümünden sıfırlama yapabilirsiniz.
+    </footer>
     
     <div class="overlay" id="overlay"></div>
     
@@ -764,15 +677,11 @@
         <h2>Takvim Ayarları</h2>
         
         <div class="settings-group">
-            <h3>Hafta Sayısı</h3>
-            <div class="weeks-selector">
-                <button id="decreaseWeeks">-</button>
-                <span id="weeksCount">4</span> Hafta
-                <button id="increaseWeeks">+</button>
-            </div>
+            <button class="dark-mode-btn" id="darkModeBtn">🌙 </button>
+            <button class="reset-btn" id="resetBtn">Tüm Verileri Sıfırla</button>
         </div>
         
-        <button class="save-settings-btn" id="saveSettings">AYARLARI KAYDET</button>
+        <button class="save-settings-btn" id="saveSettings">KAPAT</button>
     </div>
     
     <div class="reset-confirm-panel" id="resetConfirmPanel">
@@ -784,22 +693,13 @@
         </div>
     </div>
     
-    <div class="warning-panel" id="warningPanel">
-        <h2>UYARI!</h2>
-        <p>Ayarları kaydederseniz takviminiz sıfırlanacaktır. Devam etmek istiyor musunuz?</p>
-        <div class="warning-buttons">
-            <button class="warning-confirm-btn" id="warningConfirmBtn">KAYDET</button>
-            <button class="warning-cancel-btn" id="warningCancelBtn">VAZGEÇ</button>
-        </div>
-    </div>
-    
     <div class="notification" id="notification">
         Veriler başarıyla kaydedildi!
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
+            // DOM Elementleri
             const weeksContainer = document.getElementById('weeksContainer');
             const settingsBtn = document.getElementById('settingsBtn');
             const darkModeBtn = document.getElementById('darkModeBtn');
@@ -809,83 +709,70 @@
             const resetConfirmPanel = document.getElementById('resetConfirmPanel');
             const resetConfirmBtn = document.getElementById('resetConfirmBtn');
             const resetCancelBtn = document.getElementById('resetCancelBtn');
-            const warningPanel = document.getElementById('warningPanel');
-            const warningConfirmBtn = document.getElementById('warningConfirmBtn');
-            const warningCancelBtn = document.getElementById('warningCancelBtn');
             const overlay = document.getElementById('overlay');
             const saveSettings = document.getElementById('saveSettings');
-            const decreaseWeeks = document.getElementById('decreaseWeeks');
-            const increaseWeeks = document.getElementById('increaseWeeks');
-            const weeksCount = document.getElementById('weeksCount');
             
-            // Constants
+            // Sabitler
             const daysOfWeek = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const daysOfWeekShort = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
             
-            // Variables
-            let startDayIndex = 0; // Always Monday
-            let totalWeeks = 4;
+            // Değişkenler
+            let startDayIndex = 0; // Her zaman Pazartesi
+            let totalWeeks = 1;
             let isDarkMode = false;
             let today = new Date();
-            let todayIndex = (today.getDay() + 6) % 7; // Adjust so Monday is 0
+            let todayIndex = (today.getDay() + 6) % 7; // Pazartesi 0 olacak şekilde ayarla
             
-            // Load settings from localStorage
+            // localStorage'dan ayarları yükle
             function loadSettings() {
                 const savedSettings = localStorage.getItem('paragrafTakvimSettings');
                 if (savedSettings) {
                     const settings = JSON.parse(savedSettings);
                     
-                    // Dark mode
+                    // Koyu mod
                     if (settings.darkMode) {
                         toggleDarkMode();
-                    }
-                    
-                    // Weeks count
-                    if (settings.totalWeeks) {
-                        totalWeeks = settings.totalWeeks;
-                        weeksCount.textContent = totalWeeks;
                     }
                 }
             }
             
-            // Save settings to localStorage
+            // Ayarları localStorage'a kaydet
             function saveSettingsToLocalStorage() {
                 const settings = {
-                    totalWeeks: totalWeeks,
                     darkMode: isDarkMode
                 };
                 localStorage.setItem('paragrafTakvimSettings', JSON.stringify(settings));
             }
             
-            // Generate calendar based on settings
+            // Ayarlara göre takvim oluştur
             function generateCalendar() {
                 weeksContainer.innerHTML = '';
                 
-                // Create weeks
+                // Haftaları oluştur
                 for (let week = 0; week < totalWeeks; week++) {
                     const weekContainer = document.createElement('div');
                     weekContainer.className = 'week-container';
                     
-                    // Week title
+                    // Hafta başlığı
                     const weekTitle = document.createElement('h3');
                     weekTitle.className = 'week-title';
                     weekTitle.textContent = `${week + 1}. Hafta`;
                     weekContainer.appendChild(weekTitle);
                     
-                    // Calendar grid
+                    // Takvim ızgarası
                     const calendarGrid = document.createElement('div');
                     calendarGrid.className = 'calendar-grid';
                     
-                    // Create day cards for the week (always starts with Monday)
+                    // Hafta için gün kartları oluştur (her zaman Pazartesi ile başlar)
                     for (let i = 0; i < 7; i++) {
                         const dayName = daysOfWeekShort[i];
                         const dayCard = document.createElement('div');
                         dayCard.className = 'day-card';
                         
-                        // Calculate day offset from today
+                        // Bugünden gün farkını hesapla
                         const dayOffset = (week * 7) + i - todayIndex;
                         
-                        // Determine if day is past, today or future
+                        // Günün geçmiş, bugün veya gelecek olup olmadığını belirle
                         const isToday = dayOffset === 0;
                         const isPast = dayOffset < 0;
                         const isFuture = dayOffset > 0;
@@ -923,7 +810,7 @@
                         
                         calendarGrid.appendChild(dayCard);
                         
-                        // Time input formatting and validation (mm:ss, max 60:59)
+                        // Zaman girişi formatlama ve doğrulama (mm:ss, maks 60:59)
                         const timeInput = dayCard.querySelector(`#time-${week}-${i}`);
                         if (timeInput) {
                             timeInput.addEventListener('input', function(e) {
@@ -933,7 +820,7 @@
                                 }
                                 e.target.value = value;
                                 
-                                // Validate time (max 60:59)
+                                // Zaman doğrulama (maks 60:59)
                                 if (value.includes(':')) {
                                     const [minutes, seconds] = value.split(':');
                                     if (parseInt(minutes) > 60) {
@@ -948,7 +835,7 @@
                             });
                         }
                         
-                        // Tick button click event with sound
+                        // Onay butonu tıklama olayı
                         const tickBtn = dayCard.querySelector(`#tick-${week}-${i}`);
                         if (tickBtn) {
                             tickBtn.addEventListener('click', function() {
@@ -959,7 +846,7 @@
                             });
                         }
                         
-                        // Stat inputs events (max 200 questions)
+                        // İstatistik girişleri (maks 200 soru)
                         const correctInput = dayCard.querySelector(`#correct-${week}-${i}`);
                         const incorrectInput = dayCard.querySelector(`#incorrect-${week}-${i}`);
                         
@@ -973,33 +860,33 @@
                             });
                         }
                         
-                        // Lock/unlock button functionality for past days
+                        // Geçmiş günler için kilitleme/kilidi açma işlevselliği
                         if (isPast) {
                             const lockBtn = dayCard.querySelector('.lock-btn');
                             if (lockBtn) {
                                 lockBtn.addEventListener('click', function() {
                                     if (dayCard.classList.contains('locked')) {
-                                        // Unlock
+                                        // Kilidi aç
                                         dayCard.classList.remove('locked');
                                         this.innerHTML = '🔒';
                                         
-                                        // Enable all inputs
+                                        // Tüm girişleri etkinleştir
                                         const inputs = dayCard.querySelectorAll('input');
                                         inputs.forEach(input => input.readOnly = false);
                                         
-                                        // Enable tick button
+                                        // Onay butonunu etkinleştir
                                         const tickBtn = dayCard.querySelector('.tick-btn');
                                         if (tickBtn) tickBtn.disabled = false;
                                     } else {
-                                        // Lock again
+                                        // Tekrar kilitle
                                         dayCard.classList.add('locked');
                                         this.innerHTML = '🔓';
                                         
-                                        // Disable all inputs
+                                        // Tüm girişleri devre dışı bırak
                                         const inputs = dayCard.querySelectorAll('input');
                                         inputs.forEach(input => input.readOnly = true);
                                         
-                                        // Disable tick button
+                                        // Onay butonunu devre dışı bırak
                                         const tickBtn = dayCard.querySelector('.tick-btn');
                                         if (tickBtn) tickBtn.disabled = true;
                                     }
@@ -1014,11 +901,11 @@
                     weeksContainer.appendChild(weekContainer);
                 }
                 
-                // Load saved data
+                // Kayıtlı verileri yükle
                 loadFromLocalStorage();
             }
             
-            // Load saved data
+            // Kayıtlı verileri yükle
             function loadFromLocalStorage() {
                 const savedData = localStorage.getItem('paragrafTakvimData');
                 if (savedData) {
@@ -1041,7 +928,7 @@
                                 if (correctInput) correctInput.value = dayData.correct || '';
                                 if (incorrectInput) incorrectInput.value = dayData.incorrect || '';
                                 
-                                // Restore lock state for past days
+                                // Geçmiş günler için kilit durumunu geri yükle
                                 if (dayCard && dayCard.classList.contains('locked') && dayData.locked === false) {
                                     dayCard.classList.remove('locked');
                                     const lockBtn = dayCard.querySelector('.lock-btn');
@@ -1059,7 +946,7 @@
                 }
             }
             
-            // Save data to localStorage
+            // Verileri localStorage'a kaydet
             function saveToLocalStorage() {
                 const data = [];
                 
@@ -1089,7 +976,7 @@
                 
                 localStorage.setItem('paragrafTakvimData', JSON.stringify(data));
                 
-                // Show auto-save notification briefly
+                // Otomatik kaydetme bildirimi göster
                 const notification = document.getElementById('notification');
                 notification.textContent = "Otomatik kaydedildi";
                 notification.style.backgroundColor = '#3498db';
@@ -1100,53 +987,37 @@
                 }, 1000);
             }
             
-            // Reset all data
+            // Tüm verileri sıfırla
             function resetAllData() {
                 localStorage.removeItem('paragrafTakvimData');
                 localStorage.removeItem('paragrafTakvimSettings');
                 
-                // Reset variables
-                totalWeeks = 4;
-                weeksCount.textContent = totalWeeks;
+                // Değişkenleri sıfırla
+                totalWeeks = 1;
                 
-                // Regenerate calendar
+                // Takvimi yeniden oluştur
                 generateCalendar();
                 
-                // Show notification
+                // Bildirim göster
                 showNotification('Tüm veriler sıfırlandı!', 'success');
             }
             
-            // Save settings with warning
-            function saveSettingsWithWarning() {
-                warningPanel.style.display = 'block';
-                overlay.style.display = 'block';
-            }
-            
-            // Actually save settings after confirmation
-            function confirmSaveSettings() {
-                saveSettingsToLocalStorage();
-                generateCalendar();
-                settingsPanel.style.display = 'none';
-                warningPanel.style.display = 'none';
-                overlay.style.display = 'none';
-                showNotification('Ayarlar kaydedildi! Takvim sıfırlandı.', 'success');
-            }
-            
-            // Toggle dark mode
+            // Koyu modu aç/kapat
             function toggleDarkMode() {
                 isDarkMode = !isDarkMode;
                 document.body.classList.toggle('dark-mode');
-                darkModeBtn.textContent = isDarkMode ? '☀️' : '🌙';
+                darkModeBtn.textContent = isDarkMode ? '☀️ ' : '🌙 ';
+                saveSettingsToLocalStorage();
             }
             
-            // Play tick sound
+            // Onay sesi çal
             function playTickSound() {
                 const audio = new Audio('success.mp3');
                 audio.volume = 0.3;
                 audio.play().catch(e => console.log("Ses çalınamadı: ", e));
             }
             
-            // Check if all days are completed
+            // Tüm günlerin tamamlanıp tamamlanmadığını kontrol et
             function checkAllCompleted() {
                 const allCompleted = Array.from(document.querySelectorAll('.tick-btn')).every(btn => btn.classList.contains('completed'));
                 if (allCompleted) {
@@ -1155,7 +1026,7 @@
                 }
             }
             
-            // Create confetti effect
+            // Konfeti efekti oluştur
             function createConfetti() {
                 const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
                 
@@ -1188,7 +1059,7 @@
                 }
             }
             
-            // Show notification
+            // Bildirim göster
             function showNotification(message, type) {
                 const notification = document.getElementById('notification');
                 notification.textContent = message;
@@ -1200,7 +1071,7 @@
                 }, 3000);
             }
             
-            // Event listeners
+            // Olay dinleyicileri
             settingsBtn.addEventListener('click', function() {
                 settingsPanel.style.display = 'block';
                 overlay.style.display = 'block';
@@ -1208,7 +1079,6 @@
             
             darkModeBtn.addEventListener('click', function() {
                 toggleDarkMode();
-                saveSettingsToLocalStorage();
             });
             
             resetBtn.addEventListener('click', function() {
@@ -1227,44 +1097,22 @@
                 overlay.style.display = 'none';
             });
             
-            warningConfirmBtn.addEventListener('click', function() {
-                confirmSaveSettings();
-            });
-            
-            warningCancelBtn.addEventListener('click', function() {
-                warningPanel.style.display = 'none';
-                overlay.style.display = 'none';
-            });
-            
             overlay.addEventListener('click', function() {
                 settingsPanel.style.display = 'none';
                 resetConfirmPanel.style.display = 'none';
-                warningPanel.style.display = 'none';
                 overlay.style.display = 'none';
             });
             
-            decreaseWeeks.addEventListener('click', function() {
-                if (totalWeeks > 1) {
-                    totalWeeks--;
-                    weeksCount.textContent = totalWeeks;
-                }
-            });
-            
-            increaseWeeks.addEventListener('click', function() {
-                if (totalWeeks < 8) {
-                    totalWeeks++;
-                    weeksCount.textContent = totalWeeks;
-                }
-            });
-            
             saveSettings.addEventListener('click', function() {
-                saveSettingsWithWarning();
+                settingsPanel.style.display = 'none';
+                overlay.style.display = 'none';
             });
             
-            // Initialize
+            // Başlat
             loadSettings();
             generateCalendar();
         });
     </script>
 </body>
+</html>
 </html>
