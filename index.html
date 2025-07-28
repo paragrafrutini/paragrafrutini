@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="tr">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +19,7 @@
             --card-bg: white;
             --today-color: #9c27b0;
             --warning-color: #ff9800;
+            --history-color: #607d8b;
         }
 
         .dark-mode {
@@ -36,6 +36,7 @@
             --card-bg: #1e1e1e;
             --today-color: #ba68c8;
             --warning-color: #ffa726;
+            --history-color: #78909c;
         }
         
         * {
@@ -118,7 +119,7 @@
             transform: scale(1.1);
         }
         
-        .settings-btn, .dark-mode-btn {
+        .settings-btn, .dark-mode-btn, .history-btn {
             background: var(--primary-color);
             color: white;
             border: none;
@@ -133,7 +134,7 @@
             transition: all 0.3s ease;
         }
         
-        .settings-btn:hover, .dark-mode-btn:hover {
+        .settings-btn:hover, .dark-mode-btn:hover, .history-btn:hover {
             transform: scale(1.1);
         }
         
@@ -590,6 +591,143 @@
             transform: translateY(-2px);
         }
         
+        /* History Panel Styles */
+        .history-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .history-panel h2 {
+            margin-top: 0;
+            color: var(--history-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .history-week {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            background-color: var(--light-color);
+        }
+        
+        .history-week-title {
+            font-size: 1.2rem;
+            color: var(--history-color);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .history-week-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .history-day-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .history-day-name {
+            font-weight: bold;
+            color: var(--history-color);
+            font-size: 0.8rem;
+        }
+        
+        .history-day-number {
+            font-weight: bold;
+            color: var(--history-color);
+            font-size: 0.8rem;
+            text-align: right;
+        }
+        
+        .history-day-time {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .history-day-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+        }
+        
+        .history-day-correct {
+            color: var(--success-color);
+        }
+        
+        .history-day-incorrect {
+            color: var(--danger-color);
+        }
+        
+        .history-day-completed {
+            text-align: center;
+            margin-top: 5px;
+            color: var(--success-color);
+            font-size: 0.8rem;
+        }
+        
+        .history-delete-btn {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 6px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 5px;
+            width: 100%;
+        }
+        
+        .history-delete-btn:hover {
+            background: #c0392b;
+        }
+        
+        .close-history-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--history-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .close-history-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .no-history {
+            text-align: center;
+            color: var(--text-color);
+            padding: 20px;
+        }
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -601,7 +739,7 @@
         }
         
         @media (max-width: 768px) {
-            .calendar-grid {
+            .calendar-grid, .history-week-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
@@ -627,7 +765,7 @@
                 font-size: 1rem;
             }
             
-            .settings-btn, .dark-mode-btn {
+            .settings-btn, .dark-mode-btn, .history-btn {
                 width: 35px;
                 height: 35px;
                 font-size: 1rem;
@@ -647,6 +785,11 @@
                 padding: 5px;
                 font-size: 0.8rem;
             }
+            
+            .history-panel {
+                width: 95%;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -657,6 +800,7 @@
             <h1>Paragraf Soru Çözme Takvimi</h1>
             <p class="subtitle">Haftalık paragraf çözme takipçiniz</p>
             <div class="header-controls">
+                <button class="history-btn" id="historyBtn" title="Geçmiş">📜</button>
                 <button class="settings-btn" id="settingsBtn" title="Ayarlar">⚙️</button>
             </div>
         </header>
@@ -669,7 +813,7 @@
     </div>
     
     <footer>
-        Yeni hafta başladığında geçmiş verilerinizi silmek için ayarlar bölümünden sıfırlama yapabilirsiniz.
+        Geçmiş verilerinizi görüntülemek için geçmiş butonunu kullanabilirsiniz.
     </footer>
     
     <div class="overlay" id="overlay"></div>
@@ -679,6 +823,7 @@
         
         <div class="settings-group">
             <button class="dark-mode-btn" id="darkModeBtn">🌙 </button>
+            <button class="reset-btn" id="resetCurrentBtn">Mevcut Haftayı Sıfırla</button>
             <button class="reset-btn" id="resetBtn">Tüm Verileri Sıfırla</button>
         </div>
         
@@ -687,11 +832,28 @@
     
     <div class="reset-confirm-panel" id="resetConfirmPanel">
         <h2>Tüm verileri sıfırlamak istediğinize emin misiniz?</h2>
-        <p>Bu işlem geri alınamaz! Tüm kayıtlı veriler silinecek.</p>
+        <p>Bu işlem geri alınamaz! Tüm kayıtlı veriler (geçmiş dahil) silinecek.</p>
         <div class="reset-buttons">
             <button class="reset-confirm-btn" id="resetConfirmBtn">EVET, SIFIRLA</button>
             <button class="reset-cancel-btn" id="resetCancelBtn">VAZGEÇ</button>
         </div>
+    </div>
+    
+    <div class="reset-confirm-panel" id="resetCurrentConfirmPanel">
+        <h2>Mevcut haftayı sıfırlamak istediğinize emin misiniz?</h2>
+        <p>Bu işlem sadece şu anki haftanın verilerini silecek, geçmiş veriler etkilenmeyecek.</p>
+        <div class="reset-buttons">
+            <button class="reset-confirm-btn" id="resetCurrentConfirmBtn">EVET, SIFIRLA</button>
+            <button class="reset-cancel-btn" id="resetCurrentCancelBtn">VAZGEÇ</button>
+        </div>
+    </div>
+    
+    <div class="history-panel" id="historyPanel">
+        <h2>Geçmiş Haftalar</h2>
+        <div id="historyContainer">
+            <!-- JavaScript ile geçmiş haftalar buraya eklenecek -->
+        </div>
+        <button class="close-history-btn" id="closeHistoryBtn">KAPAT</button>
     </div>
     
     <div class="notification" id="notification">
@@ -703,19 +865,28 @@
             // DOM Elementleri
             const weeksContainer = document.getElementById('weeksContainer');
             const settingsBtn = document.getElementById('settingsBtn');
+            const historyBtn = document.getElementById('historyBtn');
             const darkModeBtn = document.getElementById('darkModeBtn');
             const resetBtn = document.getElementById('resetBtn');
+            const resetCurrentBtn = document.getElementById('resetCurrentBtn');
             const siteLink = document.getElementById('siteLink');
             const settingsPanel = document.getElementById('settingsPanel');
+            const historyPanel = document.getElementById('historyPanel');
+            const historyContainer = document.getElementById('historyContainer');
             const resetConfirmPanel = document.getElementById('resetConfirmPanel');
+            const resetCurrentConfirmPanel = document.getElementById('resetCurrentConfirmPanel');
             const resetConfirmBtn = document.getElementById('resetConfirmBtn');
+            const resetCurrentConfirmBtn = document.getElementById('resetCurrentConfirmBtn');
             const resetCancelBtn = document.getElementById('resetCancelBtn');
+            const resetCurrentCancelBtn = document.getElementById('resetCurrentCancelBtn');
+            const closeHistoryBtn = document.getElementById('closeHistoryBtn');
             const overlay = document.getElementById('overlay');
             const saveSettings = document.getElementById('saveSettings');
             
             // Sabitler
             const daysOfWeek = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             const daysOfWeekShort = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+            const MAX_HISTORY_WEEKS = 4; // Maksimum 4 haftalık geçmiş sakla
             
             // Değişkenler
             let startDayIndex = 0; // Her zaman Pazartesi
@@ -723,6 +894,7 @@
             let isDarkMode = false;
             let today = new Date();
             let todayIndex = (today.getDay() + 6) % 7; // Pazartesi 0 olacak şekilde ayarla
+            let currentWeekNumber = 1; // Şu anki hafta numarası
             
             // localStorage'dan ayarları yükle
             function loadSettings() {
@@ -734,13 +906,19 @@
                     if (settings.darkMode) {
                         toggleDarkMode();
                     }
+                    
+                    // Hafta numarasını yükle
+                    if (settings.currentWeekNumber) {
+                        currentWeekNumber = settings.currentWeekNumber;
+                    }
                 }
             }
             
             // Ayarları localStorage'a kaydet
             function saveSettingsToLocalStorage() {
                 const settings = {
-                    darkMode: isDarkMode
+                    darkMode: isDarkMode,
+                    currentWeekNumber: currentWeekNumber
                 };
                 localStorage.setItem('paragrafTakvimSettings', JSON.stringify(settings));
             }
@@ -757,7 +935,7 @@
                     // Hafta başlığı
                     const weekTitle = document.createElement('h3');
                     weekTitle.className = 'week-title';
-                    weekTitle.textContent = `${week + 1}. Hafta`;
+                    weekTitle.textContent = `${currentWeekNumber}. Hafta`;
                     weekContainer.appendChild(weekTitle);
                     
                     // Takvim ızgarası
@@ -912,6 +1090,15 @@
                 if (savedData) {
                     const data = JSON.parse(savedData);
                     
+                    // Eğer data boşsa veya hafta sayısı 0 ise, yeni bir hafta oluştur
+                    if (!data || data.length === 0) {
+                        localStorage.setItem('paragrafTakvimData', JSON.stringify([[]]));
+                        return;
+                    }
+                    
+                    // Aktif hafta sayısını güncelle
+                    totalWeeks = data.length;
+                    
                     for (let week = 0; week < totalWeeks; week++) {
                         for (let i = 0; i < 7; i++) {
                             const dayData = data[week] ? data[week][i] : null;
@@ -988,19 +1175,78 @@
                 }, 1000);
             }
             
-            // Tüm verileri sıfırla
+            // Yeni hafta başlat
+            function startNewWeek() {
+                // Mevcut haftayı geçmişe kaydet
+                saveCurrentWeekToHistory();
+                
+                // Hafta numarasını artır
+                currentWeekNumber++;
+                saveSettingsToLocalStorage();
+                
+                // Yeni boş bir hafta oluştur
+                localStorage.setItem('paragrafTakvimData', JSON.stringify([[]]));
+                totalWeeks = 1;
+                generateCalendar();
+                
+                // Bildirim göster
+                showNotification(`${currentWeekNumber}. hafta başlatıldı!`, 'info');
+            }
+            
+            // Mevcut haftayı geçmişe kaydet
+            function saveCurrentWeekToHistory() {
+                const savedData = localStorage.getItem('paragrafTakvimData');
+                if (savedData) {
+                    const currentWeek = JSON.parse(savedData)[0]; // Sadece ilk haftayı al (aktif hafta)
+                    
+                    // Geçmiş verileri al
+                    let history = JSON.parse(localStorage.getItem('paragrafTakvimHistory') || '[]');
+                    
+                    // Mevcut haftayı geçmişe ekle
+                    history.unshift({
+                        weekNumber: currentWeekNumber,
+                        data: currentWeek
+                    });
+                    
+                    // Maksimum geçmiş hafta sayısını kontrol et
+                    if (history.length > MAX_HISTORY_WEEKS) {
+                        history = history.slice(0, MAX_HISTORY_WEEKS);
+                    }
+                    
+                    // Geçmişi kaydet
+                    localStorage.setItem('paragrafTakvimHistory', JSON.stringify(history));
+                }
+            }
+            
+            // Tüm verileri sıfırla (geçmiş dahil)
             function resetAllData() {
                 localStorage.removeItem('paragrafTakvimData');
+                localStorage.removeItem('paragrafTakvimHistory');
                 localStorage.removeItem('paragrafTakvimSettings');
                 
                 // Değişkenleri sıfırla
                 totalWeeks = 1;
+                currentWeekNumber = 1;
                 
                 // Takvimi yeniden oluştur
                 generateCalendar();
                 
+                // Geçmiş panelini güncelle
+                updateHistoryPanel();
+                
                 // Bildirim göster
                 showNotification('Tüm veriler sıfırlandı!', 'success');
+            }
+            
+            // Sadece mevcut haftayı sıfırla
+            function resetCurrentWeek() {
+                // Yeni boş bir hafta oluştur
+                localStorage.setItem('paragrafTakvimData', JSON.stringify([[]]));
+                totalWeeks = 1;
+                generateCalendar();
+                
+                // Bildirim göster
+                showNotification('Mevcut hafta sıfırlandı!', 'success');
             }
             
             // Koyu modu aç/kapat
@@ -1024,6 +1270,12 @@
                 if (allCompleted) {
                     createConfetti();
                     showNotification('Tebrikler! Tüm günleri tamamladınız! 🎉', 'success');
+                    
+                    // Yeni hafta başlat
+                    setTimeout(() => {
+                        startNewWeek();
+                        updateHistoryPanel();
+                    }, 2000);
                 }
             }
             
@@ -1064,7 +1316,8 @@
             function showNotification(message, type) {
                 const notification = document.getElementById('notification');
                 notification.textContent = message;
-                notification.style.backgroundColor = type === 'success' ? '#2ecc71' : '#e74c3c';
+                notification.style.backgroundColor = type === 'success' ? '#2ecc71' : 
+                                                  type === 'info' ? '#3498db' : '#e74c3c';
                 notification.classList.add('show');
                 
                 setTimeout(() => {
@@ -1072,9 +1325,97 @@
                 }, 3000);
             }
             
+            // Geçmiş panelini güncelle
+            function updateHistoryPanel() {
+    const history = JSON.parse(localStorage.getItem('paragrafTakvimHistory') || '[]');
+    historyContainer.innerHTML = '';
+    
+    if (history.length === 0) {
+        historyContainer.innerHTML = `
+        <div class="no-history">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <span style="font-size: 3rem;">📭</span>
+            </div>
+            <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 10px;">Henüz Kayıtlı Geçmiş Veri Yok</h3>
+            <p style="text-align: center; margin-bottom: 20px;">
+                Tamamlanan haftalar burada görüntülenecektir.<br>
+                Bir haftayı tamamen bitirdiğinizde (tüm günleri tamamladığınızda),<br>
+                o haftanın verileri bu bölüme otomatik olarak kaydedilecektir.
+            </p>
+            <div style="text-align: center; font-size: 0.9em; color: var(--text-color); opacity: 0.7;">
+                <p>Şu anda görüntülenen: ${currentWeekNumber}. Hafta</p>
+            </div>
+        </div>
+        `;
+        return;
+    }
+    
+    history.forEach((week, weekIndex) => {
+        const weekElement = document.createElement('div');
+        weekElement.className = 'history-week';
+        
+        const weekTitle = document.createElement('div');
+        weekTitle.className = 'history-week-title';
+        weekTitle.innerHTML = `
+            <span>${week.weekNumber}. Hafta</span>
+            <button class="history-delete-btn" data-week="${weekIndex}">Sil</button>
+        `;
+        
+        const weekGrid = document.createElement('div');
+        weekGrid.className = 'history-week-grid';
+        
+        week.data.forEach((dayData, dayIndex) => {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'history-day-card';
+            
+            dayElement.innerHTML = `
+                <div class="history-day-name">${daysOfWeekShort[dayIndex]}</div>
+                <div class="history-day-number">${dayIndex + 1}</div>
+                <div class="history-day-time">${dayData.time || '--:--'}</div>
+                <div class="history-day-stats">
+                    <span class="history-day-correct">✓ ${dayData.correct || 0}</span>
+                    <span class="history-day-incorrect">✗ ${dayData.incorrect || 0}</span>
+                </div>
+                ${dayData.completed ? '<div class="history-day-completed">✔️ Tamamlandı</div>' : ''}
+            `;
+            
+            weekGrid.appendChild(dayElement);
+        });
+        
+        weekElement.appendChild(weekTitle);
+        weekElement.appendChild(weekGrid);
+        historyContainer.appendChild(weekElement);
+    });
+    
+    // Silme butonlarına event listener ekle
+    document.querySelectorAll('.history-delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const weekIndex = parseInt(this.getAttribute('data-week'));
+            deleteHistoryWeek(weekIndex);
+        });
+    });
+}
+            // Geçmişten bir haftayı sil
+            function deleteHistoryWeek(weekIndex) {
+                let history = JSON.parse(localStorage.getItem('paragrafTakvimHistory') || '[]');
+                
+                if (weekIndex >= 0 && weekIndex < history.length) {
+                    history.splice(weekIndex, 1);
+                    localStorage.setItem('paragrafTakvimHistory', JSON.stringify(history));
+                    updateHistoryPanel();
+                    showNotification('Hafta geçmişten silindi!', 'success');
+                }
+            }
+            
             // Olay dinleyicileri
             settingsBtn.addEventListener('click', function() {
                 settingsPanel.style.display = 'block';
+                overlay.style.display = 'block';
+            });
+            
+            historyBtn.addEventListener('click', function() {
+                updateHistoryPanel();
+                historyPanel.style.display = 'block';
                 overlay.style.display = 'block';
             });
             
@@ -1087,9 +1428,20 @@
                 overlay.style.display = 'block';
             });
             
+            resetCurrentBtn.addEventListener('click', function() {
+                resetCurrentConfirmPanel.style.display = 'block';
+                overlay.style.display = 'block';
+            });
+            
             resetConfirmBtn.addEventListener('click', function() {
                 resetAllData();
                 resetConfirmPanel.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
+            resetCurrentConfirmBtn.addEventListener('click', function() {
+                resetCurrentWeek();
+                resetCurrentConfirmPanel.style.display = 'none';
                 overlay.style.display = 'none';
             });
             
@@ -1098,9 +1450,21 @@
                 overlay.style.display = 'none';
             });
             
+            resetCurrentCancelBtn.addEventListener('click', function() {
+                resetCurrentConfirmPanel.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
+            closeHistoryBtn.addEventListener('click', function() {
+                historyPanel.style.display = 'none';
+                overlay.style.display = 'none';
+            });
+            
             overlay.addEventListener('click', function() {
                 settingsPanel.style.display = 'none';
+                historyPanel.style.display = 'none';
                 resetConfirmPanel.style.display = 'none';
+                resetCurrentConfirmPanel.style.display = 'none';
                 overlay.style.display = 'none';
             });
             
@@ -1115,5 +1479,4 @@
         });
     </script>
 </body>
-</html>
 </html>
